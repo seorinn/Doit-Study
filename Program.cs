@@ -1,27 +1,26 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace doit_study_homework_template
+namespace TodoList
 {
-    public interface homework{
-        bool isRunning { get; set;}
-        void main();
-    }
-
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            homework[] hw = {
-                new HW01(true), // 결과를 보고싶은 과제의 false를 true로 수정하세요
-                new HW02(false), // 반대로 결과를 가리고 싶은 과제를 true에서 false로 수정하세요
-                new HW03(false) // before => "HW03(false)" // after => "HW03(true)"
-            };
-
-            foreach(var temp in hw){
-                if(temp.isRunning)
-                    temp.main();
-            }
+            CreateHostBuilder(args).Build().Run();
         }
 
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
